@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char* timeConversion(char* s) {
+    // Allocate memory for the result string
+    static char result[9]; // Format "HH:MM:SS\0"
+    
+    int hour, minute, second;
+    char period[3];
+
+    // Extract time components and period (AM/PM) using sscanf
+    sscanf(s, "%2d:%2d:%2d%2s", &hour, &minute, &second, period);
+    
+    // Convert hour to 24-hour format
+    if (strcmp(period, "PM") == 0 && hour != 12) {
+        hour += 12;
+    } else if (strcmp(period, "AM") == 0 && hour == 12) {
+        hour = 0;
+    }
+    
+    // Format the time into the result string
+    sprintf(result, "%02d:%02d:%02d", hour, minute, second);
+    
+    return result;
+}
